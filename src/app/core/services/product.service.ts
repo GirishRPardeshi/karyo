@@ -39,7 +39,7 @@ export interface Product {
   providedIn: 'root',
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/products';
+  private apiUrl = 'assets/db.json';
 
   private searchSubject = new BehaviorSubject<string>('');
   search$ = this.searchSubject.asObservable();
@@ -48,7 +48,8 @@ export class ProductService {
 
   // ✅ Get all products with optional search
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl).pipe(
+    return this.http.get<{products: Product[]}>(this.apiUrl).pipe(
+      map(response => response.products),
       shareReplay(1)
     );
   }
@@ -62,8 +63,10 @@ export class ProductService {
     return this.searchSubject.asObservable();
   }
 
-  getProductById(id: number) {
-    return this.http.get<Product>(`http://localhost:3000/products/${id}`);
+  getProductById(id: number): Observable<Product | undefined> {
+    return this.http.get<{products: Product[]}>(this.apiUrl).pipe(
+      map(response => response.products.find(product => product.id === id))
+    );
   }
 
 

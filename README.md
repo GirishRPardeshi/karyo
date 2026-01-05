@@ -46,7 +46,7 @@ A modern, full-featured e-commerce platform built with Angular 21, featuring rea
 - **HTTP Client**: Angular HttpClient
 - **Reactive Programming**: RxJS 7.8+
 - **Build Tool**: Angular CLI 21
-- **Mock API**: JSON Server
+- **Data Storage**: Local JSON files (assets/db.json)
 - **Testing**: Vitest + JSDOM
 - **Code Quality**: Prettier
 
@@ -105,7 +105,7 @@ Karyo/
 ### 1. Clone the Repository
 ```bash
 git clone <repository-url>
-cd karyo
+cd shivcart
 ```
 
 ### 2. Install Dependencies
@@ -113,19 +113,13 @@ cd karyo
 npm install
 ```
 
-### 3. Start the Mock API Server
-```bash
-npm run server
-```
-This starts JSON Server on `http://localhost:3000` with the mock data.
-
-### 4. Start the Development Server
+### 3. Start the Development Server
 ```bash
 npm start
 ```
 Navigate to `http://localhost:4200` in your browser.
 
-### 5. Build for Production
+### 4. Build for Production
 ```bash
 npm run build
 ```
@@ -139,7 +133,6 @@ The build artifacts will be stored in the `dist/` directory.
 | `npm run build` | Build for production |
 | `npm run watch` | Build in watch mode |
 | `npm test` | Run unit tests |
-| `npm run server` | Start JSON Server mock API |
 
 ## 🔧 Configuration
 
@@ -190,19 +183,20 @@ npm test
 
 Tests are configured with Vitest and JSDOM for fast, reliable testing.
 
-## 📱 API Endpoints
+## 📱 Data Sources
 
 ### Products
-- `GET /products` - Retrieve all products
-- `GET /products/:id` - Get specific product details
+- Data loaded from `assets/db.json` (products array)
+- Individual product details retrieved by ID from the same file
 
 ### Orders
-- `POST /orders` - Create new order
-- `GET /orders?userId=:userId` - Get user orders
+- Orders stored in localStorage for persistence
+- No external API calls required
 
 ### Authentication
-- Local authentication with localStorage persistence
-- User registration and login validation
+- Static users loaded from `assets/db.json` (users array)
+- New user registrations stored in localStorage
+- Authentication state managed with Angular Signals
 
 ## 🤝 Contributing
 

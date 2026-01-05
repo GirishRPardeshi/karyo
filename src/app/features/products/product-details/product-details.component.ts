@@ -32,7 +32,7 @@ export class ProductDetailsComponent implements OnInit {
       this.productService.getProductById(id).subscribe({
         next: (product) => {
           console.log('Product from API:', product);
-          this.product.set(product);
+          this.product.set(product || null);
           this.isLoading.set(false);
         },
         error: (error) => {
